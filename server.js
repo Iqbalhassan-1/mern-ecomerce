@@ -21,7 +21,7 @@ app.use(cors());
 
 app.use("/api/user",userRouter);
 app.get("/", (req, res) => {
-  res.status(200).send("Hello World123");
+  res.status(200).send("Hello World");
 });
 
 app.listen(port, () => {
