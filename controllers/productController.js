@@ -57,10 +57,30 @@ const listProducts = async (req, res) => {
 }
 
 const removeProduct = async (req, res) => {
+    console.log(req.body);
+    try {
+        await ProductModel.findByIdAndDelete(req.body.id);
+        res.json({ success: true, message: "Product removed successfully" });
+    } catch (error) {
+        console.error("Error removing product:", error);
+        res.json({ success: false, message: error.message || "Internal server error" });
+        
+    }
 
 }
 const singleProduct = async (req, res) => {
-
+try {
+    const product = await ProductModel.findById(req.body.productId);
+    if (!product) {
+        return res.json({ success: false, message: "Product not found" });
+    }
+    res.json({ success: true, message: "Product fetched successfully", product });
+    
+} catch (error) {
+    console.error("Error fetching single product:", error);
+    res.json({ success: false, message: error.message || "Internal server error" });
+    
+}
 }
 
 export { addProduct, listProducts, removeProduct, singleProduct };
